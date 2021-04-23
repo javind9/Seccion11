@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-reactive',
@@ -12,6 +12,7 @@ export class ReactiveComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.crearFormulario();
+    this.cargarDataAlFormulario();
 
 
 
@@ -19,6 +20,10 @@ export class ReactiveComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  get pasatiempos (){
+    return this.forma.get('pasatiempos') as FormArray;
+  };
 
 
   get nombreNoValido (){
@@ -50,7 +55,25 @@ export class ReactiveComponent implements OnInit {
       direccion: this.fb.group({
         distrito: ['', Validators.required],
         ciudad: ['', Validators.required]
-      })
+      }),
+      pasatiempos: this.fb.array([
+        [],[],[],[],[]
+      ])
+    });
+  }
+
+  cargarDataAlFormulario(){
+    this.forma.reset({ //setValue debes asgignar todos los campos
+      nombre: 'Fernando',
+      apellido: 'Perez',
+      correo: 'fernando@gmail.com',
+      /**
+        direccion: {
+        distrito: 'Ontario',
+        ciudad: 'Otawa'
+      }
+       */
+      
     });
   }
 
@@ -72,6 +95,10 @@ export class ReactiveComponent implements OnInit {
         
       });
     }
+    //Posteo de la información
+    this.forma.reset({ //reset establece las propiedades que tiene el objeto, setValue tienes que establecer todas las propiedades
+      nombre: 'Sin nombre'
+    });
   }
 
 }

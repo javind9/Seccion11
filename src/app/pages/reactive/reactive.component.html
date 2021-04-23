@@ -4,15 +4,17 @@
 
     <div>
 
+        <!--Nombre-->
         <div class="form-group row">
             <label class="col-2 col-form-label">Nombre</label>
             <div class="col">
-
                 <input class="form-control" type="text" placeholder="Nombre" formControlName="nombre" [class.is-invalid]="nombreNoValido">
                 <small *ngIf="nombreNoValido" class="text-danger">Ingrese 5 letras</small>
             </div>
         </div>
 
+
+        <!--Apellido-->
         <div class="form-group row">
             <label class="col-2 col-form-label">Apellido</label>
             <div class="col">
@@ -21,9 +23,10 @@
                 <small *ngIf="apellidoNoValido" class="text-danger">Ingrese 5 letras</small>
             </div>
         </div>
-
     </div>
 
+
+    <!--Correo-->
     <div class="form-group row">
         <label class="col-2 col-form-label">Correo</label>
         <div class="col">
@@ -34,10 +37,10 @@
     </div>
 
 
+    <!--Direccion-->
     <div class="form-group row" formGroupName="direccion">
         <label class="col-2 col-form-label">Direccion</label>
         <div class="form-row col">
-
             <div class="col">
                 <input type="text" class="form-control" placeholder="Distrito" formControlName="distrito" [class.is-invalid]="distritoNoValido">
             </div>
@@ -49,6 +52,39 @@
 
 
 
+
+    <!--Array-->
+    <div class="row">
+        <div class="col">
+
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Pasatiempo</th>
+                        <th>Borrar</th>
+                    </tr>
+                </thead>
+                <tbody formArrayName="pasatiempos">
+                    <tr *ngFor="let control of pasatiempos.controls; let i = index">
+                        <td>{{i + 1}}</td>
+                        <td>
+                            <input class="form-control" type="text" [formControlName]="i">
+                        </td>
+                        <td>
+                            <button class="btn btn-danger">Borrar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button class="btn btn-primary mt-3 mb-5 btn-block" type="button">+ Agregar</button>
+        </div>
+    </div>
+
+
+
+    <!--Boton-->
     <div class="form-group row">
         <label class="col-2 col-form-label">&nbsp;</label>
         <div class="input-group col">
