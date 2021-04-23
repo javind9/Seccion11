@@ -59,6 +59,10 @@ export class ReactiveComponent implements OnInit {
     return (pass1 === pass2) ? false :true; //si son iguales regreso true, si no es así regreso false
   }
 
+  get usuarioNoValido (){
+    return this.forma.get('usuario').invalid && this.forma.get('usuario').touched
+  }
+
 
 
 
@@ -67,6 +71,7 @@ export class ReactiveComponent implements OnInit {
       nombre: ['', [Validators.required, Validators.minLength(5)]], //Valor por defecto, validadores síncronos (inmediatos) y validadores asíncronos
       apellido: ['', [Validators.required, this.validadores.noHerrera]],
       correo: ['', [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$'), Validators.required]],
+      usuario: ['', , this.validadores.existeUsuario],
       pass1: ['', Validators.required],
       pass2: ['', Validators.required],
       direccion: this.fb.group({
@@ -84,6 +89,8 @@ export class ReactiveComponent implements OnInit {
       nombre: 'Fernando',
       apellido: 'Perez',
       correo: 'fernando@gmail.com',
+      pass1: '123',
+      pass2: '123',
         direccion: {
         distrito: 'Ontario',
         ciudad: 'Otawa'
