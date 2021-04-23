@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidadoresService } from 'src/app/services/validadores.service';
 
 @Component({
   selector: 'app-reactive',
@@ -10,7 +11,8 @@ export class ReactiveComponent implements OnInit {
 
   forma: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private validadores: ValidadoresService) {
     this.crearFormulario();
     this.cargarDataAlFormulario();
 
@@ -46,19 +48,34 @@ export class ReactiveComponent implements OnInit {
     return this.forma.get('direccion.ciudad').invalid && this.forma.get('direccion.ciudad').touched
   }
 
+  get pass1NoValido (){
+    return this.forma.get('pass1').invalid && this.forma.get('pass1').touched
+  }
+
+  get pass2NoValido (){
+    const pass1 = this.forma.get('pass1').value;
+    const pass2 = this.forma.get('pass2').value;
+
+    return (pass1 === pass2) ? false :true; //si son iguales regreso true, si no es así regreso false
+  }
+
+
+
 
   crearFormulario(){
     this.forma = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(5)]], //Valor por defecto, validadores síncronos (inmediatos) y validadores asíncronos
-      apellido: ['', Validators.required],
+      apellido: ['', [Validators.required, this.validadores.noHerrera]],
       correo: ['', [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$'), Validators.required]],
+      pass1: ['', Validators.required],
+      pass2: ['', Validators.required],
       direccion: this.fb.group({
         distrito: ['', Validators.required],
         ciudad: ['', Validators.required]
       }),
-      pasatiempos: this.fb.array([
-        [],[],[],[],[]
-      ])
+      pasatiempos: this.fb.array([])
+    },{
+      validators: this.validadores.passwordsIguales('pass1','pass2')
     });
   }
 
@@ -67,14 +84,22 @@ export class ReactiveComponent implements OnInit {
       nombre: 'Fernando',
       apellido: 'Perez',
       correo: 'fernando@gmail.com',
-      /**
         direccion: {
         distrito: 'Ontario',
         ciudad: 'Otawa'
-      }
-       */
-      
+      },
     });
+
+    ['Comer','Dormir'].forEach(valor => this.pasatiempos.push(this.fb.control(valor)));
+  }
+
+
+  agregarPasatiempos(){
+    this.pasatiempos.push( this.fb.control(''));
+  }
+
+  borrarPasatiempos(i: number){
+    this.pasatiempos.removeAt(i);
   }
 
 

@@ -36,6 +36,25 @@
         </div>
     </div>
 
+    <!--Contraseña1-->
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Contraseña</label>
+        <div class="col">
+
+            <input class="form-control" type="password" placeholder="Contraseña" formControlName="pass1" [class.is-invalid]="pass1NoValido">
+        </div>
+    </div>
+
+    <!--Contraseña2-->
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Repita</label>
+        <div class="col">
+
+            <input class="form-control" type="password" placeholder="Repita contraseña" formControlName="pass2" [class.is-invalid]="pass2NoValido">
+        </div>
+    </div>
+
+
 
     <!--Direccion-->
     <div class="form-group row" formGroupName="direccion">
@@ -72,13 +91,13 @@
                             <input class="form-control" type="text" [formControlName]="i">
                         </td>
                         <td>
-                            <button class="btn btn-danger">Borrar</button>
+                            <button class="btn btn-danger" (click)="borrarPasatiempos(i)">Borrar</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
 
-            <button class="btn btn-primary mt-3 mb-5 btn-block" type="button">+ Agregar</button>
+            <button class="btn btn-primary mt-3 mb-5 btn-block" type="button" (click)="agregarPasatiempos()">+ Agregar</button>
         </div>
     </div>
 
