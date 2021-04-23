@@ -15,6 +15,7 @@ export class ReactiveComponent implements OnInit {
               private validadores: ValidadoresService) {
     this.crearFormulario();
     this.cargarDataAlFormulario();
+    this.crearListeners();
 
 
 
@@ -130,6 +131,21 @@ export class ReactiveComponent implements OnInit {
     //Posteo de la información
     this.forma.reset({ //reset establece las propiedades que tiene el objeto, setValue tienes que establecer todas las propiedades
       nombre: 'Sin nombre'
+    });
+  }
+
+
+  crearListeners(){
+    //this.forma.valueChanges.subscribe(valor =>{
+    //  console.log(valor);
+    //});
+
+    //this.forma.statusChanges.subscribe(status =>{
+    //  console.log(status);
+    //});
+
+    this.forma.get('nombre').valueChanges.subscribe(valor => {
+      console.log(valor);
     });
   }
 
